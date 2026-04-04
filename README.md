@@ -4,6 +4,8 @@ This is a Windows GUI wrapper for `sakl.exe`.
 
 The goal is simple: make the Software Authentication Key Loader easier to use without having to work from the command line. The packaged release includes the GUI, the original CLI, the manual, and the supporting files needed to run it as a normal desktop app.
 
+![Software Authentication Keyloader GUI](assets/gui-screenshot.png)
+
 ## Credit
 
 The original SAKL project, `sakl.exe`, and the bundled documentation are by Daniel Dugger.
