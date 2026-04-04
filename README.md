@@ -58,7 +58,8 @@ The key editor is split into 16 byte pairs so it is easier to enter, review, pas
 
 - `Read Status -> Active` worked reliably on the tested radio
 - `Read Status -> Device` was not reliable and is not offered in the current GUI flow
-- `Zeroize` may be rejected by some radios or firmware even when reads work
+- `Zeroize` is defined in the relevant standards, but Motorola radios tested so far have consistently returned an invalid opcode / invalid message response even when reads work
+- That zeroize behavior has been observed across multiple radios and was confirmed independently by Daniel Dugger and additional field testing
 - `Load` may occasionally need a retry on some radios
 
 ## Building From Source
