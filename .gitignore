@@ -1,6 +1,8 @@
 # Debug / local experiments
 sakl_gui_debug.exe
 Software Authentication Keyloader GUI.original.exe
+sakl_gui_settings.ini
+Software-Authentication-Keyloader-GUI-v*.zip
 
 # Optional local backups
 *.bak

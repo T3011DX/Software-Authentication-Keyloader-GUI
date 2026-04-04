@@ -63,6 +63,7 @@ namespace SaklGuiFixed
         private readonly CheckBox darkModeCheckBox;
         private readonly CheckBox verboseCliCheckBox;
         private readonly TextBox resultSummaryLabel;
+        private readonly string settingsFilePath;
 
         private Color appBackground;
         private Color sectionBackground;
@@ -76,6 +77,7 @@ namespace SaklGuiFixed
 
         public MainForm()
         {
+            settingsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "sakl_gui_settings.ini");
             SetTheme(false);
 
             Text = "Software Authentication Keyloader GUI";
@@ -660,6 +662,7 @@ namespace SaklGuiFixed
             {
                 SetTheme(darkModeCheckBox.Checked);
                 ApplyTheme();
+                SaveSettings();
             };
 
             var manualButton = new Button
@@ -709,6 +712,7 @@ namespace SaklGuiFixed
             root.Controls.Add(topContentPanel);
 
             Controls.Add(root);
+            LoadSettings();
             UpdateControlState();
             ApplyTheme();
             AppendOutput("Ready.");
@@ -862,6 +866,62 @@ namespace SaklGuiFixed
             verboseCliCheckBox.ForeColor = textColor;
             darkModeCheckBox.ForeColor = textColor;
             RefreshSegmentStyles();
+        }
+
+        private void LoadSettings()
+        {
+            try
+            {
+                if (!File.Exists(settingsFilePath))
+                {
+                    return;
+                }
+
+                var lines = File.ReadAllLines(settingsFilePath);
+                for (var index = 0; index < lines.Length; index++)
+                {
+                    var line = lines[index].Trim();
+                    if (line.Length == 0 || line.StartsWith("#", StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+
+                    var separatorIndex = line.IndexOf('=');
+                    if (separatorIndex <= 0)
+                    {
+                        continue;
+                    }
+
+                    var key = line.Substring(0, separatorIndex).Trim();
+                    var value = line.Substring(separatorIndex + 1).Trim();
+                    if (string.Equals(key, "dark_mode", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var isDark = value == "1" ||
+                                     value.Equals("true", StringComparison.OrdinalIgnoreCase) ||
+                                     value.Equals("yes", StringComparison.OrdinalIgnoreCase);
+                        darkModeCheckBox.Checked = isDark;
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        private void SaveSettings()
+        {
+            try
+            {
+                var lines = new[]
+                {
+                    "# Software Authentication Keyloader GUI settings",
+                    "dark_mode=" + (darkModeCheckBox.Checked ? "1" : "0")
+                };
+                File.WriteAllLines(settingsFilePath, lines);
+            }
+            catch
+            {
+            }
         }
 
         private void ApplyThemeToControl(Control control)
