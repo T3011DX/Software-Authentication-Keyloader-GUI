@@ -1,0 +1,17 @@
+# Debug / local experiments
+sakl_gui_debug.exe
+Software Authentication Keyloader GUI.original.exe
+
+# Optional local backups
+*.bak
+*.tmp
+*.log
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vs/
+*.user
+*.suo
